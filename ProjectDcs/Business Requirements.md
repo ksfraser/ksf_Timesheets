@@ -63,3 +63,41 @@ S01: 8 × $20 = $160 (sick accrual)
 ## Out of Scope
 - Payroll processing (external system)
 - Leave request (ksf_Leave)
+
+## Integration Dependencies
+
+### Provided To
+| Module | Data Provided |
+|--------|---------------|
+| ksf_HRM | Payroll liability entries |
+| ksf_ProjectManagement | Actual hours vs estimates |
+| ksf_Calendar | Time entry calendar view |
+| ksf_Workflow | Timesheet approval workflow |
+
+### Consumed From
+| Module | Data Consumed |
+|--------|---------------|
+| ksf_HRM | Employee hourly rates |
+| ksf_ProjectManagement | Projects, tasks for time entry |
+| ksf_Leave | Vacation/sick hours for reporting |
+
+### Reference Comparisons
+- OpenProject: Time & Costs module
+- Odoo: Timesheets (employee time tracking)
+- DotProject: Time Tracking
+- OrangeHRM: Time (attendance, timesheets)
+
+## Success Metrics
+- Timesheet completion rate > 95% by Friday
+- Billing accuracy > 99%
+- Time entry within 24 hours of work
+- Zero payroll processing errors
+
+## Timeline
+- Phase 1: Basic timesheet entry and approval
+- Phase 2: Project/task integration
+- Phase 3: Billing calculation, payroll export
+- Phase 4: Advanced reporting, analytics
+
+*Document Version: 1.1.0*
+*Last Updated: 2026-05-11*
