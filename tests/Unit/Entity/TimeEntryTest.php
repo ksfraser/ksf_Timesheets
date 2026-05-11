@@ -2,56 +2,116 @@
 
 declare(strict_types=1);
 
-namespace Ksfraser\Timesheets\Tests\Unit\Entity;
+namespace Ksfraser\Tests\Unit\Timesheets\Entity;
 
-use PHPUnit\Framework\TestCase;
 use Ksfraser\Timesheets\Entity\TimeEntry;
+use PHPUnit\Framework\TestCase;
 
 class TimeEntryTest extends TestCase
 {
-    public function testCanCreateTimeEntry(): void
+    public function testDefaultValues(): void
     {
         $entry = new TimeEntry();
-        $this->assertInstanceOf(TimeEntry::class, $entry);
+
+        $this->assertNull($entry->getId());
+        $this->assertSame(0, $entry->getEmployeeId());
+        $this->assertSame('', $entry->getEntryDate());
+        $this->assertSame(0.0, $entry->getHours());
+        $this->assertSame('', $entry->getDescription());
+        $this->assertSame(0, $entry->getProjectId());
+        $this->assertSame(0, $entry->getTaskId());
+        $this->assertSame(TimeEntry::STATUS_DRAFT, $entry->getStatus());
+        $this->assertNull($entry->getApproverId());
+        $this->assertNull($entry->getRejectionReason());
     }
 
-    public function testCanSetAndGetEmployeeId(): void
+    /**
+     * @covers Ksfraser\Timesheets\Entity\TimeEntry::setId
+     * @covers Ksfraser\Timesheets\Entity\TimeEntry::getId
+     */
+    public function testSetId(): void
     {
         $entry = new TimeEntry();
-        $entry->setEmployeeId(1);
-        $this->assertEquals(1, $entry->getEmployeeId());
+        $result = $entry->setId(123);
+
+        $this->assertInstanceOf(TimeEntry::class, $result);
+        $this->assertSame(123, $entry->getId());
     }
 
-    public function testCanSetAndGetActivityCode(): void
+    /**
+     * @covers Ksfraser\Timesheets\Entity\TimeEntry::setEmployeeId
+     * @covers Ksfraser\Timesheets\Entity\TimeEntry::getEmployeeId
+     */
+    public function testSetEmployeeId(): void
     {
         $entry = new TimeEntry();
-        $entry->setActivityCode('G01');
-        $this->assertEquals('G01', $entry->getActivityCode());
+        $result = $entry->setEmployeeId(456);
+
+        $this->assertInstanceOf(TimeEntry::class, $result);
+        $this->assertSame(456, $entry->getEmployeeId());
     }
 
-    public function testCanSetDateAndHours(): void
+    /**
+     * @covers Ksfraser\Timesheets\Entity\TimeEntry::setHours
+     * @covers Ksfraser\Timesheets\Entity\TimeEntry::getHours
+     */
+    public function testSetHours(): void
     {
         $entry = new TimeEntry();
-        $entry->setDate('2024-07-15');
-        $entry->setHours(8);
-        $this->assertEquals('2024-07-15', $entry->getDate());
-        $this->assertEquals(8, $entry->getHours());
+        $result = $entry->setHours(8.5);
+
+        $this->assertInstanceOf(TimeEntry::class, $result);
+        $this->assertSame(8.5, $entry->getHours());
     }
 
-    public function testCanSetStatus(): void
+    /**
+     * @covers Ksfraser\Timesheets\Entity\TimeEntry::setStatus
+     * @covers Ksfraser\Timesheets\Entity\TimeEntry::getStatus
+     */
+    public function testStatusConstants(): void
     {
-        $entry = new TimeEntry();
-        $entry->setStatus(TimeEntry::STATUS_SUBMITTED);
-        $this->assertEquals(TimeEntry::STATUS_SUBMITTED, $entry->getStatus());
+        $this->assertSame('draft', TimeEntry::STATUS_DRAFT);
+        $this->assertSame('submitted', TimeEntry::STATUS_SUBMITTED);
+        $this->assertSame('approved', TimeEntry::STATUS_APPROVED);
+        $this->assertSame('rejected', TimeEntry::STATUS_REJECTED);
     }
 
-    public function testCanCheckIsOvertime(): void
+    /**
+     * @covers Ksfraser\Timesheets\Entity\TimeEntry::setEntryDate
+     * @covers Ksfraser\Timesheets\Entity\TimeEntry::getEntryDate
+     */
+    public function testSetEntryDate(): void
     {
         $entry = new TimeEntry();
-        $entry->setActivityCode('O01');
-        $this->assertTrue($entry->isOvertime());
-        
-        $entry->setActivityCode('G01');
-        $this->assertFalse($entry->isOvertime());
+        $result = $entry->setEntryDate('2026-05-11');
+
+        $this->assertInstanceOf(TimeEntry::class, $result);
+        $this->assertSame('2026-05-11', $entry->getEntryDate());
+    }
+
+    /**
+     * @covers Ksfraser\Timesheets\Entity\TimeEntry::setApproverId
+     * @covers Ksfraser\Timesheets\Entity\TimeEntry::getApproverId
+     */
+    public function testSetApproverId(): void
+    {
+        $entry = new TimeEntry();
+        $result = $entry->setApproverId(789);
+
+        $this->assertInstanceOf(TimeEntry::class, $result);
+        $this->assertSame(789, $entry->getApproverId());
+    }
+
+    /**
+     * @covers Ksfraser\Timesheets\Entity\TimeEntry::setProjectId
+     * @covers Ksfraser\Timesheets\Entity\TimeEntry::getProjectId
+     */
+    public function testSetProjectId(): void
+    {
+        $entry = new TimeEntry();
+        $result = $entry->setProjectId(100);
+
+        $this->assertInstanceOf(TimeEntry::class, $result);
+        $this->assertSame(100, $entry->getProjectId());
     }
 }
