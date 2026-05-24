@@ -109,7 +109,53 @@ ksf_Timesheets provides time tracking linked to projects and billing/payroll cal
 - Bulk approval option
 - Auto-reminder on Friday
 
-### FR-TS-005: Billing Calculation
+### FR-TS-005: RBAC Integration
+**Requirement**: System shall enforce role-based access control via ksfraser/rbac.
+
+**Features**:
+- Register record types 'timesheet', 'time_entry' with RBAC
+- Apply RBAC JOIN on all data queries
+- PUBLIC projection restricts non-sensitive fields
+- FULL projection available for authorized roles only
+
+### FR-TS-006: DTO Projections
+**Requirement**: System shall use RBAC-aware DTOs for all data access.
+
+**Features**:
+- TimesheetDTO maps PUBLIC/FULL fields based on user role
+- TimeEntryDTO applies field-level filtering
+- Projection level determined by RBAC team membership
+- Admin override for super-admin role
+
+### FR-TS-007: Soft Delete
+**Requirement**: System shall support soft deletion of timesheets and cascading time entries.
+
+**Features**:
+- Timesheets set deleted=1, deleted_by, deleted_at
+- Time entries cascade soft delete with parent
+- Hard delete restricted to super-admin
+- Deleted records excluded from all standard queries
+- Retention period configurable via settings
+
+### FR-TS-008: Audit Trail
+**Requirement**: System shall log all RBAC-sensitive operations.
+
+**Features**:
+- Log timesheet status changes (submit, approve, reject)
+- Log projection level downgrade attempts
+- Log soft delete and restore operations
+- Audit trail viewable by HR and super-admin
+
+### FR-TS-009: Calendar Sync
+**Requirement**: System shall sync time entries to ksf_Calendar via PSR-14 event.
+
+**Features**:
+- Emit 'timesheet.approved' event for calendar sync
+- Time entries appear as 'timetracking' type calendar events
+- Calendar visibility gated by ksf_Calendar RBAC
+- Sync only approved/relevant entries
+
+### FR-TS-010: Billing Calculation
 **Requirement**: System shall calculate billing amounts.
 
 **Formula**:
@@ -122,7 +168,7 @@ Line Amount = Hours × Activity Rate × Employee Hourly Rate
 - Apply activity multiplier
 - Generate line items for invoice
 
-### FR-TS-006: Payroll Export
+### FR-TS-011: Payroll Export
 **Requirement**: System shall export data for payroll.
 
 **Features**:
