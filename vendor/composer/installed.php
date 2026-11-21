@@ -3,7 +3,7 @@
         'name' => 'ksfraser/ksf_timesheets',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '907e5ffa8a497b0a586567531f35b6b31541a3dd',
+        'reference' => '0681642fc5317ea19c83f60cdce59b7aec2dae16',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'ksfraser/ksf_timesheets' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '907e5ffa8a497b0a586567531f35b6b31541a3dd',
+            'reference' => '0681642fc5317ea19c83f60cdce59b7aec2dae16',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
